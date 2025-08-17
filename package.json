@@ -1,0 +1,59 @@
+{
+  "name": "sigma",
+  "version": "1.0.0",
+  "description": "A modern web browser built with Electron for macOS",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --mac",
+    "build:mac": "electron-builder --mac",
+    "dist": "electron-builder --mac --publish=never",
+    "dev": "electron . --debug",
+    "icons:round": "node scripts/add-rounded-corners.js",
+    "icons:restore": "cp assets/AppIcons/backup-original/* assets/AppIcons/ 2>/dev/null || echo 'No backup found'"
+  },
+  "build": {
+    "appId": "com.sigma.browser",
+    "productName": "Sigma",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/**/*",
+      "!dist/**/*",
+      "!.git/**/*",
+      "!*.log"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "assets/AppIcons/1024.png",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "minimumSystemVersion": "10.15.0",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    }
+  },
+  "devDependencies": {
+    "electron": "^32.0.1",
+    "electron-builder": "^24.9.1",
+    "sharp": "^0.34.3"
+  }
+}

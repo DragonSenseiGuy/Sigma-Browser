@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sigma</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="window-chrome">
+      <div class="tabbar" id="tabbar">
+        <ul class="tabs" id="tabs"></ul>
+        <button class="tab add" id="new-tab-button" title="New tab">+</button>
+      </div>
+      <button id="settings-button" class="settings-button" title="Settings">⚙︎</button>
+    </header>
+
+    <div class="toolbar">
+      <div class="nav-buttons">
+        <button id="back-button" title="Back">←</button>
+        <button id="forward-button" title="Forward">→</button>
+        <button id="reload-button" title="Reload">⟳</button>
+        <button id="home-button" title="Home">
+          <img src="./assets/home-icon.svg" alt="Home" width="16" height="16" />
+        </button>
+      </div>
+      <input id="address-bar" class="address-bar" type="text" placeholder="Search or enter address" />
+      <button id="go-button" class="go-button" title="Go">Go</button>
+    </div>
+
+    <div id="progress-bar" class="progress-bar hidden">
+      <div id="progress-fill" class="progress-fill"></div>
+    </div>
+
+    <main id="content">
+      <div id="webviews" class="webviews"></div>
+    </main>
+
+
+    <div id="settings-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="settings-title">Settings</h2>
+          <button id="close-settings" class="close">×</button>
+        </div>
+        <div class="modal-body">
+          <label for="theme-select">Theme</label>
+          <select id="theme-select">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="system">System</option>
+          </select>
+          <p class="hint">Your choice is saved on this device.</p>
+          <button id="open-history" style="margin-top:16px;">View History</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="history-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="history-title">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="history-title">History</h2>
+          <button id="close-history" class="close">×</button>
+        </div>
+        <div class="modal-body">
+          <ul id="history-list" style="max-height:300px;overflow:auto;padding-left:0;"></ul>
+        </div>
+      </div>
+    </div>
+
+    <script src="./renderer.js"></script>
+  </body>
+  </html>
+
+

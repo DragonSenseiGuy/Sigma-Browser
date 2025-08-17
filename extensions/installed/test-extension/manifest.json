@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "Sigma Test Extension",
+  "version": "1.0.0",
+  "description": "A simple test extension for Sigma browser",
+  
+  "permissions": [
+    "tabs",
+    "storage",
+    "browserAction"
+  ],
+  
+  "browser_action": {
+    "default_title": "Sigma Test",
+    "default_popup": "popup.html"
+  },
+  
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
