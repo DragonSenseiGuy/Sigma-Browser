@@ -1,13 +1,17 @@
 {
   "name": "sigma",
   "version": "1.0.0",
-  "description": "A modern web browser built with Electron for macOS",
+  "description": "A modern web browser built with Electron for macOS and Windows",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder --mac",
+    "build": "electron-builder",
     "build:mac": "electron-builder --mac",
-    "dist": "electron-builder --mac --publish=never",
+    "build:win": "electron-builder --win",
+    "build:all": "electron-builder --mac --win",
+    "dist": "electron-builder --publish=never",
+    "dist:mac": "electron-builder --mac --publish=never",
+    "dist:win": "electron-builder --win --publish=never",
     "dev": "electron . --debug",
     "icons:round": "node scripts/add-rounded-corners.js",
     "icons:restore": "cp assets/AppIcons/backup-original/* assets/AppIcons/ 2>/dev/null || echo 'No backup found'"
@@ -49,6 +53,34 @@
       "gatekeeperAssess": false,
       "entitlements": "build/entitlements.mac.plist",
       "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "win": {
+      "icon": "assets/AppIcons/256.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "publisherName": "Sigma Browser",
+      "verifyUpdateCodeSignature": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Sigma Browser"
     }
   },
   "devDependencies": {

@@ -10,10 +10,11 @@
 [![Electron](https://img.shields.io/badge/Electron-Latest-blue.svg)](https://www.electronjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-14%2B-green.svg)](https://nodejs.org/)
 [![macOS](https://img.shields.io/badge/macOS-10.15%2B-blue.svg)](https://www.apple.com/macos/)
+[![Windows](https://img.shields.io/badge/Windows-10%2B-blue.svg)](https://www.microsoft.com/windows/)
 
 </div>
 
-Sigma is a modern, lightweight web browser designed exclusively for macOS. It combines the power of Chromium with a clean, minimalist interface and advanced features optimized for the Mac experience. Built with Electron, it delivers native macOS performance, security, and seamless integration with your Mac workflow.
+Sigma is a modern, lightweight web browser designed for macOS and Windows. It combines the power of Chromium with a clean, minimalist interface and advanced features optimized for desktop computing. Built with Electron, it delivers native performance, security, and seamless integration with your operating system workflow.
 
 ## ✨ Key Features
 
@@ -52,8 +53,10 @@ Sigma is a modern, lightweight web browser designed exclusively for macOS. It co
 - **Limited Node Integration**: Minimal exposure of Node.js APIs
 - **Secure Session Management**: Persistent sessions with proper partitioning
 - **Safe Navigation**: URL filtering and validation
-- **macOS Security Integration**: Hardened runtime, Gatekeeper compatibility, and App Sandbox support
-- **Code Signing Ready**: Prepared for macOS code signing and notarization
+- **Platform Security Integration**:
+  - **macOS**: Hardened runtime, Gatekeeper compatibility, and App Sandbox support
+  - **Windows**: Code signing ready and Windows Defender compatibility
+- **Cross-Platform Security**: Prepared for platform-specific code signing and verification
 
 ### 🛠️ **Developer Features**
 - **Performance Monitoring**: Built-in load time tracking and reporting
@@ -96,15 +99,24 @@ Sigma is a modern, lightweight web browser designed exclusively for macOS. It co
 ## 🚀 **Getting Started**
 
 ### **System Requirements**
-- **macOS**: 10.15 (Catalina) or later
+
+#### **macOS**
+- **Version**: 10.15 (Catalina) or later
 - **Architecture**: Intel x64 or Apple Silicon (M1/M2/M3)
+
+#### **Windows**
+- **Version**: Windows 10 (1903) or later / Windows 11
+- **Architecture**: x64 (64-bit) or x86 (32-bit)
+
+#### **General Requirements**
 - **Memory**: 4GB RAM minimum, 8GB recommended
 - **Storage**: 200MB free disk space
 
 ### **Prerequisites**
 - [Node.js](https://nodejs.org/) (v14 or higher)
 - [npm](https://www.npmjs.com/) (usually comes with Node.js)
-- **Xcode Command Line Tools** (for development): `xcode-select --install`
+- **For macOS development**: Xcode Command Line Tools (`xcode-select --install`)
+- **For Windows development**: Visual Studio Build Tools or Visual Studio Community
 
 ### **Quick Installation**
 
@@ -132,12 +144,25 @@ npm run dev
 
 ### **Building for Production**
 
-**Build for macOS (Universal Binary - Intel + Apple Silicon):**
+#### **Cross-Platform Builds**
+
+**Build for all platforms:**
 ```bash
-npm run build
+npm run build:all
 ```
 
-**Build specific architecture:**
+**Build for specific platforms:**
+```bash
+# macOS only (Universal Binary - Intel + Apple Silicon)
+npm run build:mac
+
+# Windows only (x64 + x86)
+npm run build:win
+```
+
+#### **Platform-Specific Options**
+
+**macOS specific architectures:**
 ```bash
 # Intel x64 only
 npm run build:mac -- --x64
@@ -146,12 +171,35 @@ npm run build:mac -- --x64
 npm run build:mac -- --arm64
 ```
 
-**Distribution Package:**
+**Windows specific architectures:**
+```bash
+# 64-bit only
+npm run build:win -- --x64
+
+# 32-bit only
+npm run build:win -- --ia32
+```
+
+#### **Distribution Packages**
+
+**All platforms:**
 ```bash
 npm run dist
 ```
 
-This creates both `.dmg` installer and `.zip` archive in the `dist/` folder.
+**Platform-specific distributions:**
+```bash
+# macOS distribution (.dmg + .zip)
+npm run dist:mac
+
+# Windows distribution (.exe installer + .zip)
+npm run dist:win
+```
+
+**Output:**
+- **macOS**: `.dmg` installer and `.zip` archive
+- **Windows**: `.exe` NSIS installer and `.zip` archive
+- All files are created in the `dist/` folder
 
 ## 🏗️ **Project Architecture**
 
@@ -236,13 +284,21 @@ Sigma supports special internal URLs:
 - **Theme Not Applying**: Restart the application
 - **History Not Saving**: Check localStorage permissions
 - **Tabs Not Responding**: Close and reopen problematic tabs
-- **App Won't Launch**: Check macOS version compatibility (10.15+)
-- **Permission Issues**: Grant necessary permissions in System Preferences > Security & Privacy
+- **App Won't Launch**: Check system version compatibility (macOS 10.15+ / Windows 10+)
 
-**macOS-Specific Issues:**
+**Platform-Specific Issues:**
+
+**macOS:**
 - **Gatekeeper Warning**: Right-click app and select "Open" to bypass unsigned app warning
 - **Dock Icon Issues**: Restart Dock with `killall Dock` in Terminal
 - **Menu Bar Problems**: Reset menu bar cache by restarting the app
+- **Permission Issues**: Grant necessary permissions in System Preferences > Security & Privacy
+
+**Windows:**
+- **SmartScreen Warning**: Click "More info" then "Run anyway" for unsigned builds
+- **Antivirus False Positive**: Add Sigma to your antivirus whitelist
+- **Installation Issues**: Run installer as administrator if needed
+- **Permission Issues**: Check Windows Defender settings and app permissions
 
 **Debug Mode:**
 ```bash
@@ -343,13 +399,19 @@ This project is licensed under the **GPLv3 License** - see the [LICENSE](LICENSE
 
 ### **Reporting Bugs**
 When reporting bugs, please include:
-- 🍎 **macOS Version**: e.g., macOS 14.0 (Sonoma), macOS 13.0 (Ventura)
-- 💻 **Mac Model**: e.g., MacBook Pro 2021 (M1), iMac 2020 (Intel)
+- 🖥️ **Operating System**:
+  - **macOS**: e.g., macOS 14.0 (Sonoma), macOS 13.0 (Ventura)
+  - **Windows**: e.g., Windows 11 22H2, Windows 10 21H2
+- 💻 **Hardware**:
+  - **macOS**: e.g., MacBook Pro 2021 (M1), iMac 2020 (Intel)
+  - **Windows**: e.g., Dell XPS 13, Custom PC (Intel i7/AMD Ryzen)
 - 📱 **Sigma Version**: Found in Sigma > About Sigma menu
 - 🔄 **Steps to Reproduce**: Clear reproduction steps
 - 📸 **Screenshots**: Visual evidence if applicable
 - 📋 **Console Logs**: Any error messages or warnings
-- 🔧 **System Info**: Available via Apple Menu > About This Mac
+- 🔧 **System Info**:
+  - **macOS**: Available via Apple Menu > About This Mac
+  - **Windows**: Available via Settings > System > About
 
 ### **Feature Requests**
 We love hearing your ideas! For feature requests:
